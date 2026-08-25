@@ -76,6 +76,14 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("mLastMouseX - mX", almanac)
         self.assertIn("mLastMouseY - mY", almanac)
 
+    def test_widescreen_extends_aquarium_waves_and_fog_without_changing_gameplay_grid(self):
+        board = (ROOT / "src" / "Lawn" / "Board.cpp").read_text(encoding="utf-8")
+
+        self.assertIn("IMAGE_WAVESIDE, -GAME_SCREEN_OFFSET_X, 40", board)
+        self.assertIn("IMAGE_WAVECENTER, 640, 40", board)
+        self.assertIn("IMAGE_WAVESIDE, BOARD_WIDTH + GAME_SCREEN_OFFSET_X, 40", board)
+        self.assertIn("float aPosX = x * 80 + mFogOffset + 145", board)
+
 
 if __name__ == "__main__":
     unittest.main()
