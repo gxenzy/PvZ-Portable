@@ -7148,13 +7148,14 @@ void Board::DrawUIBottom(Graphics* g)
 	{
 		int aWaveTime = std::abs(static_cast<int>((mMainCounter / 8) % 22) - 11);
 		g->SetDrawMode(Graphics::DRAWMODE_ADDITIVE);
-		g->DrawImageCel(Sexy::IMAGE_WAVESIDE, 0, 40, aWaveTime);
+		g->DrawImageCel(Sexy::IMAGE_WAVESIDE, -GAME_SCREEN_OFFSET_X, 40, aWaveTime);
+		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 0, 40, aWaveTime);
 		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 160, 40, aWaveTime);
 		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 320, 40, aWaveTime);
 		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 480, 40, aWaveTime);
-		//PvzpDrawImageCelScaled(g, Sexy::IMAGE_WAVESIDE, 800, 40, 0, aWaveTime, -1.0f, 1.0f);
+		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 640, 40, aWaveTime);
 		PvzpDrawImageCelScaled(
-			g, Sexy::IMAGE_WAVESIDE, 800, 40, aWaveTime % Sexy::IMAGE_WAVESIDE->mNumCols,
+			g, Sexy::IMAGE_WAVESIDE, BOARD_WIDTH + GAME_SCREEN_OFFSET_X, 40, aWaveTime % Sexy::IMAGE_WAVESIDE->mNumCols,
 			aWaveTime / Sexy::IMAGE_WAVESIDE->mNumCols, -1.0f, 1.0f
 		);
 		g->SetDrawMode(Graphics::DRAWMODE_NORMAL);
@@ -7329,7 +7330,7 @@ void Board::DrawFog(Graphics* g)
 			// fog shape of the cell; the extra row 6 reuses row 0's shape
 			int aCelLook = mGridCelLook[x][y % MAX_GRID_SIZE_Y];
 			int aCelCol = aCelLook % 8;
-			float aPosX = x * 80 + mFogOffset - 15;
+		float aPosX = x * 80 + mFogOffset + 145;
 			float aPosY = y * 85 + 20;
 			// the fog animation uses 900- and 500-frame periods; mod by their lcm (4500) to avoid float precision loss on large counters
 			constexpr uint32_t FOG_ANIM_PERIOD = 4500;
