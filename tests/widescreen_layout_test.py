@@ -98,8 +98,20 @@ class WidescreenLayoutTests(unittest.TestCase):
 
         self.assertIn("applyWidescreenTextureModFromZip(Uri uri)", importer)
         self.assertIn('"main.pak".equals(name)', importer)
+        self.assertIn('new File(gameDir, "widescreen.pak")', importer)
+        self.assertNotIn('new File(gameDir, "main.pak.goty-backup")', importer)
         self.assertIn("WIDESCREEN_TEXTURE_MARKER", importer)
         self.assertIn("btn_pick_widescreen_texture_zip", layout)
+
+    def test_widescreen_pack_overlays_only_visual_assets_on_top_of_latest_goty(self):
+        app_base = (ROOT / "src" / "SexyAppFramework" / "SexyAppBase.cpp").read_text(encoding="utf-8")
+        pak = (ROOT / "src" / "SexyAppFramework" / "paklib" / "PakInterface.cpp").read_text(encoding="utf-8")
+
+        self.assertIn('AddPakFile(GetResourcePath("widescreen.pak"), true, true)', app_base)
+        self.assertIn("IsWidescreenTextureAsset", pak)
+        self.assertIn('aPakKey.starts_with("IMAGES/")', pak)
+        self.assertIn('aPakKey.starts_with("REANIM/")', pak)
+        self.assertIn('aPakKey.ends_with(".COMPILED")', pak)
 
     def test_widescreen_branch_builds_the_portable_windows_executable_too(self):
         workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
