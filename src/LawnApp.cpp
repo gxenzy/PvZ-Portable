@@ -2021,7 +2021,7 @@ void LawnApp::ButtonDepress(int theId)
 
 void LawnApp::CenterDialog(Dialog* theDialog, int theWidth, int theHeight)
 {
-	theDialog->Resize((mWidth - theWidth) / 2, (mHeight - theHeight) / 2, theWidth, theHeight);
+	theDialog->Resize((gLawnApp->mWidth - theWidth) / 2, (gLawnApp->mHeight - theHeight) / 2, theWidth, theHeight);
 }
 
 void LawnApp::PlayFoley(FoleyType theFoleyType)

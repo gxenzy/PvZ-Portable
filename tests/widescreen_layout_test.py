@@ -16,6 +16,7 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("WIDESCREEN_WIDTH = 1066", constants)
         self.assertIn("WIDESCREEN_PAD = (WIDESCREEN_WIDTH - BOARD_WIDTH) / 2", constants)
         self.assertIn("mWidth = WIDESCREEN_WIDTH", app)
+        self.assertIn("gLawnApp->mWidth - theWidth", app)
 
     def test_viewport_uses_the_logical_canvas_aspect_ratio(self):
         viewport = (ROOT / "src" / "SexyAppFramework" / "graphics" / "GLInterface.cpp").read_text(encoding="utf-8")
