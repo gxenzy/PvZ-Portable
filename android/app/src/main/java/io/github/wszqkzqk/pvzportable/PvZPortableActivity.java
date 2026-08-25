@@ -21,7 +21,6 @@
 
 package io.github.wszqkzqk.pvzportable;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,13 +47,6 @@ public class PvZPortableActivity extends SDLActivity {
         File extDir = getExternalFilesDir(null);
         if (extDir != null && !extDir.exists()) extDir.mkdirs();
         Log.i(TAG, "Resource dir: " + (extDir != null ? extDir.getAbsolutePath() : "null"));
-
-        if (!hasGameResources(extDir)) {
-            super.onCreate(savedInstanceState);
-            startActivity(new Intent(this, ResourceImportActivity.class));
-            finish();
-            return;
-        }
 
         super.onCreate(savedInstanceState);
         hideSystemUI();
@@ -153,10 +145,4 @@ public class PvZPortableActivity extends SDLActivity {
         super.setRequestedOrientation(requestedOrientation);
     }
 
-    private static boolean hasGameResources(File dir) {
-        if (dir == null || !dir.isDirectory()) return false;
-        File pak = new File(dir, "main.pak");
-        File props = new File(dir, "properties");
-        return pak.exists() && props.isDirectory();
-    }
 }

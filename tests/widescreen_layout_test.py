@@ -33,6 +33,16 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn('branches: [ "main", "codex/widescreen-android" ]', workflow)
         self.assertIn("if: github.ref_name != 'codex/widescreen-android'", workflow)
 
+    def test_first_run_import_does_not_start_the_sdl_runtime(self):
+        manifest = (ROOT / "android" / "app" / "src" / "main" / "AndroidManifest.xml").read_text(encoding="utf-8")
+        launcher = (ROOT / "android" / "app" / "src" / "main" / "java" / "io" / "github" / "wszqkzqk" / "pvzportable" / "LauncherActivity.java").read_text(encoding="utf-8")
+        game_activity = (ROOT / "android" / "app" / "src" / "main" / "java" / "io" / "github" / "wszqkzqk" / "pvzportable" / "PvZPortableActivity.java").read_text(encoding="utf-8")
+
+        self.assertIn('android:name=".LauncherActivity"', manifest)
+        self.assertIn("ResourceImportActivity.class", launcher)
+        self.assertIn("PvZPortableActivity.class", launcher)
+        self.assertNotIn("ResourceImportActivity.class", game_activity)
+
 
 if __name__ == "__main__":
     unittest.main()
