@@ -84,7 +84,10 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_REANIM_SELECTORSCREEN_ADVENTURE_HIGHLIGHT
 	).release();
 
-	mAdventureButton->Resize(0, 0, Sexy::IMAGE_REANIM_SELECTORSCREEN_ADVENTURE_BUTTON->mWidth, 125);
+	{
+		int aW = Sexy::IMAGE_REANIM_SELECTORSCREEN_ADVENTURE_BUTTON ? Sexy::IMAGE_REANIM_SELECTORSCREEN_ADVENTURE_BUTTON->mWidth : 340;
+		mAdventureButton->Resize(0, 0, aW, 125);
+	}
 	mAdventureButton->mClip = false;
 	mAdventureButton->mBtnNoDraw = true;
 	mAdventureButton->mMouseVisible = false;
@@ -103,7 +106,10 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_REANIM_SELECTORSCREEN_SURVIVAL_HIGHLIGHT,
 		Sexy::IMAGE_REANIM_SELECTORSCREEN_SURVIVAL_HIGHLIGHT
 	).release();
-	mMinigameButton->Resize(0, 0, Sexy::IMAGE_REANIM_SELECTORSCREEN_SURVIVAL_BUTTON->mWidth, 130);
+	{
+		int aW = Sexy::IMAGE_REANIM_SELECTORSCREEN_SURVIVAL_BUTTON ? Sexy::IMAGE_REANIM_SELECTORSCREEN_SURVIVAL_BUTTON->mWidth : 320;
+		mMinigameButton->Resize(0, 0, aW, 130);
+	}
 	mMinigameButton->mClip = false;
 	mMinigameButton->mBtnNoDraw = true;
 	mMinigameButton->mMouseVisible = false;
@@ -122,7 +128,10 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_REANIM_SELECTORSCREEN_CHALLENGES_HIGHLIGHT,
 		Sexy::IMAGE_REANIM_SELECTORSCREEN_CHALLENGES_HIGHLIGHT
 	).release();
-	mPuzzleButton->Resize(0, 0, Sexy::IMAGE_REANIM_SELECTORSCREEN_CHALLENGES_BUTTON->mWidth, 121);
+	{
+		int aW = Sexy::IMAGE_REANIM_SELECTORSCREEN_CHALLENGES_BUTTON ? Sexy::IMAGE_REANIM_SELECTORSCREEN_CHALLENGES_BUTTON->mWidth : 285;
+		mPuzzleButton->Resize(0, 0, aW, 121);
+	}
 	mPuzzleButton->mClip = false;
 	mPuzzleButton->mBtnNoDraw = true;
 	mPuzzleButton->mMouseVisible = false;
@@ -141,7 +150,10 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_REANIM_SELECTORSCREEN_VASEBREAKER_HIGHLIGHT,
 		Sexy::IMAGE_REANIM_SELECTORSCREEN_VASEBREAKER_HIGHLIGHT
 	).release();
-	mSurvivalButton->Resize(0, 0, Sexy::IMAGE_REANIM_SELECTORSCREEN_VASEBREAKER_BUTTON->mWidth, 124);
+	{
+		int aW = Sexy::IMAGE_REANIM_SELECTORSCREEN_VASEBREAKER_BUTTON ? Sexy::IMAGE_REANIM_SELECTORSCREEN_VASEBREAKER_BUTTON->mWidth : 265;
+		mSurvivalButton->Resize(0, 0, aW, 124);
+	}
 	mSurvivalButton->mClip = false;
 	mSurvivalButton->mBtnNoDraw = true;
 	mSurvivalButton->mMouseVisible = false;
@@ -205,7 +217,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_SELECTORSCREEN_OPTIONS2,
 		Sexy::IMAGE_SELECTORSCREEN_OPTIONS2
 	).release();
-	mOptionsButton->Resize(0, 0, Sexy::IMAGE_SELECTORSCREEN_OPTIONS1->mWidth, Sexy::IMAGE_SELECTORSCREEN_OPTIONS1->mHeight + 23);
+	{
+		int aW = Sexy::IMAGE_SELECTORSCREEN_OPTIONS1 ? Sexy::IMAGE_SELECTORSCREEN_OPTIONS1->mWidth : 70;
+		int aH = Sexy::IMAGE_SELECTORSCREEN_OPTIONS1 ? Sexy::IMAGE_SELECTORSCREEN_OPTIONS1->mHeight : 50;
+		mOptionsButton->Resize(0, 0, aW, aH + 23);
+	}
 	mOptionsButton->mClip = false; // fixes drawing issues
 	mOptionsButton->mBtnNoDraw = true;
 	mOptionsButton->mMouseVisible = false;
@@ -220,7 +236,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_SELECTORSCREEN_HELP2,
 		Sexy::IMAGE_SELECTORSCREEN_HELP2
 	).release();
-	mHelpButton->Resize(0, 0, Sexy::IMAGE_SELECTORSCREEN_HELP1->mWidth, Sexy::IMAGE_SELECTORSCREEN_HELP1->mHeight + 33);
+	{
+		int aW = Sexy::IMAGE_SELECTORSCREEN_HELP1 ? Sexy::IMAGE_SELECTORSCREEN_HELP1->mWidth : 70;
+		int aH = Sexy::IMAGE_SELECTORSCREEN_HELP1 ? Sexy::IMAGE_SELECTORSCREEN_HELP1->mHeight : 50;
+		mHelpButton->Resize(0, 0, aW, aH + 33);
+	}
 	mHelpButton->mClip = false; // fixes drawing issues
 	mHelpButton->mBtnNoDraw = true;
 	mHelpButton->mMouseVisible = false;
@@ -235,7 +255,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_SELECTORSCREEN_QUIT2,
 		Sexy::IMAGE_SELECTORSCREEN_QUIT2
 	).release();
-	mQuitButton->Resize(0, 0, Sexy::IMAGE_SELECTORSCREEN_QUIT1->mWidth + 10, Sexy::IMAGE_SELECTORSCREEN_QUIT1->mHeight + 10);
+	{
+		int aW = Sexy::IMAGE_SELECTORSCREEN_QUIT1 ? Sexy::IMAGE_SELECTORSCREEN_QUIT1->mWidth : 70;
+		int aH = Sexy::IMAGE_SELECTORSCREEN_QUIT1 ? Sexy::IMAGE_SELECTORSCREEN_QUIT1->mHeight : 50;
+		mQuitButton->Resize(0, 0, aW + 10, aH + 10);
+	}
 	mQuitButton->mClip = false; // fixes drawing issues
 	mQuitButton->mBtnNoDraw = true;
 	mQuitButton->mMouseVisible = false;
@@ -267,7 +291,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_SELECTORSCREEN_STOREHIGHLIGHT,
 		Sexy::IMAGE_SELECTORSCREEN_STOREHIGHLIGHT
 	).release();
-	mStoreButton->Resize(405, 484, Sexy::IMAGE_SELECTORSCREEN_STORE->mWidth, Sexy::IMAGE_SELECTORSCREEN_STORE->mHeight);
+	{
+		int aW = Sexy::IMAGE_SELECTORSCREEN_STORE ? Sexy::IMAGE_SELECTORSCREEN_STORE->mWidth : 80;
+		int aH = Sexy::IMAGE_SELECTORSCREEN_STORE ? Sexy::IMAGE_SELECTORSCREEN_STORE->mHeight : 80;
+		mStoreButton->Resize(405, 484, aW, aH);
+	}
 	mStoreButton->mClip = false; // fixes drawing issues
 	mStoreButton->mMouseVisible = false;
 
@@ -280,7 +308,11 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_SELECTORSCREEN_ALMANACHIGHLIGHT,
 		Sexy::IMAGE_SELECTORSCREEN_ALMANACHIGHLIGHT
 	).release();
-	mAlmanacButton->Resize(327, 428, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mWidth, Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mHeight);
+	{
+		int aW = Sexy::IMAGE_SELECTORSCREEN_ALMANAC ? Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mWidth : 80;
+		int aH = Sexy::IMAGE_SELECTORSCREEN_ALMANAC ? Sexy::IMAGE_SELECTORSCREEN_ALMANAC->mHeight : 80;
+		mAlmanacButton->Resize(327, 428, aW, aH);
+	}
 	mAlmanacButton->mClip = false; // fixes drawing issues
 	mAlmanacButton->mMouseVisible = false;
 
