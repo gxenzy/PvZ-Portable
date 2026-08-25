@@ -8,7 +8,7 @@
     <string name="status_missing">Game resources not found.\nPlease import main.pak + properties/ to continue.</string>
 
     <string name="section_import_resources">Import Game Resources</string>
-    <string name="import_help">1. Import your legally purchased GOTY ZIP or folder (main.pak + properties/). 2. Then apply your PvZ Widescreen mod ZIP to install its 16:9 texture pack. The original Windows DLL loader is not needed.</string>
+    <string name="import_help">1. Import your legally purchased GOTY ZIP or folder (main.pak + properties/). 2. Then apply your PvZ Widescreen mod ZIP. PvZ Portable keeps the latest GOTY pack and overlays only the mod’s 16:9 textures; the original Windows DLL loader is not needed.</string>
     <string name="btn_pick_zip">Import GOTY Base ZIP</string>
     <string name="btn_pick_dir">Import GOTY Base Folder</string>
     <string name="btn_pick_widescreen_texture_zip">Apply PvZ Widescreen Texture ZIP</string>
@@ -21,7 +21,7 @@
     <string name="btn_launch_game">Start Game</string>
 
     <string name="import_success">Import completed successfully!</string>
-    <string name="widescreen_import_success">PvZ Widescreen texture pack applied. Your GOTY main.pak was backed up.</string>
+    <string name="widescreen_import_success">PvZ Widescreen textures applied as an overlay. Your latest GOTY main.pak remains unchanged.</string>
     <string name="widescreen_import_requires_base">Import the GOTY base ZIP or folder before applying the widescreen texture pack.</string>
     <string name="import_failed">Import failed: %1$s</string>
     <string name="export_success">Save data exported successfully!</string>

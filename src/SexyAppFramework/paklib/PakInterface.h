@@ -95,7 +95,7 @@ public:
 	PakInterface();
 	~PakInterface();
 
-	bool					AddPakFile(const std::string& theFileName);
+	bool					AddPakFile(const std::string& theFileName, bool theOverrideExisting = false, bool theWidescreenTexturesOnly = false);
 	PFILE*					FOpen(const char* theFileName, const char* theAccess) override;
 	int						FClose(PFILE* theFile) override;
 	int						FSeek(PFILE* theFile, long theOffset, int theOrigin) override;

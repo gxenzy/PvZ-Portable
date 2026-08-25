@@ -3363,6 +3363,8 @@ void SexyAppBase::Init()
 	}
 
 	gPakInterface->AddPakFile(GetResourcePath("main.pak"));
+	if (std::filesystem::is_regular_file(GetResourcePath("widescreen.pak")))
+		gPakInterface->AddPakFile(GetResourcePath("widescreen.pak"), true, true);
 
 	// Set up demo recording stuff
 	if (mPlayingDemoBuffer) // must load before any demo-synced ops

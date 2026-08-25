@@ -225,9 +225,8 @@ public class ResourceImportActivity extends AppCompatActivity {
     }
 
     /**
-     * Replaces only the resource pack after the user has imported their GOTY base files.
-     * The Windows DLL loader is not usable on Android; PvZ Portable implements its
-     * widescreen behavior natively and consumes this widescreen texture pack directly.
+     * Installs the legacy widescreen pack as an overlay. PvZ Portable keeps the user's
+     * newer GOTY main.pak intact and selectively reads only visual assets from this file.
      */
     private void applyWidescreenTextureModFromZip(Uri uri) {
         if (!hasResources()) {
@@ -269,14 +268,9 @@ public class ResourceImportActivity extends AppCompatActivity {
 
                 if (!foundPak) throw new IOException("The widescreen ZIP does not contain main.pak");
 
-                File installedPak = new File(gameDir, "main.pak");
-                File backupPak = new File(gameDir, "main.pak.goty-backup");
-                if (backupPak.exists() && !backupPak.delete()) throw new IOException("Cannot replace previous GOTY backup");
-                if (installedPak.exists() && !installedPak.renameTo(backupPak)) throw new IOException("Cannot back up GOTY main.pak");
-                if (!tempPak.renameTo(installedPak)) {
-                    if (backupPak.exists()) backupPak.renameTo(installedPak);
-                    throw new IOException("Cannot install widescreen main.pak");
-                }
+                File installedPak = new File(gameDir, "widescreen.pak");
+                if (installedPak.exists() && !installedPak.delete()) throw new IOException("Cannot replace previous widescreen pack");
+                if (!tempPak.renameTo(installedPak)) throw new IOException("Cannot install widescreen texture pack");
                 tempPak = null;
                 new File(gameDir, WIDESCREEN_TEXTURE_MARKER).createNewFile();
 
@@ -300,6 +294,8 @@ public class ResourceImportActivity extends AppCompatActivity {
     private void clearWidescreenTextureMarker() {
         File marker = new File(gameDir, WIDESCREEN_TEXTURE_MARKER);
         if (marker.exists() && !marker.delete()) Log.w(TAG, "Cannot clear widescreen texture marker");
+        File overlayPak = new File(gameDir, "widescreen.pak");
+        if (overlayPak.exists() && !overlayPak.delete()) Log.w(TAG, "Cannot clear widescreen texture overlay");
     }
 
     /**

@@ -82,7 +82,17 @@ std::string PakInterface::NormalizePakPath(std::string_view theFileName)
 	return aResult;
 }
 
-bool PakInterface::AddPakFile(const std::string& theFileName)
+static bool IsWidescreenTextureAsset(const std::string& aPakKey)
+{
+	if (aPakKey.ends_with(".COMPILED"))
+		return false;
+
+	const bool aSupportedImage = aPakKey.ends_with(".PNG") || aPakKey.ends_with(".JPG") ||
+		aPakKey.ends_with(".JPEG") || aPakKey.ends_with(".GIF");
+	return aSupportedImage && (aPakKey.starts_with("IMAGES/") || aPakKey.starts_with("REANIM/"));
+}
+
+bool PakInterface::AddPakFile(const std::string& theFileName, bool theOverrideExisting, bool theWidescreenTexturesOnly)
 {
 	FILE *aFileHandle = fcaseopen(theFileName.c_str(), "rb");
 	if (!aFileHandle)
@@ -164,7 +174,15 @@ bool PakInterface::AddPakFile(const std::string& theFileName)
 		}
 
 		std::string aKey = NormalizePakPath(aName);
-		auto aRecordItr = mPakRecordMap.emplace(aKey, PakRecord()).first;
+		if (theWidescreenTexturesOnly && !IsWidescreenTextureAsset(aKey))
+		{
+			aPos += aSrcSize;
+			continue;
+		}
+
+		auto aRecordItr = theOverrideExisting
+			? mPakRecordMap.insert_or_assign(aKey, PakRecord()).first
+			: mPakRecordMap.emplace(aKey, PakRecord()).first;
 		PakRecord* aPakRecord = &aRecordItr->second;
 		aPakRecord->mCollection = aPakCollection;
 		aPakRecord->mFileName = aKey;
