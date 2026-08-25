@@ -73,6 +73,8 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("IMAGE_AWARDSCREEN_BACK, -GAME_SCREEN_OFFSET_X, 0", award)
         self.assertIn("IMAGE_STORE_BACKGROUND, -GAME_SCREEN_OFFSET_X, 0", store)
         self.assertIn("IMAGE_ALMANAC_INDEXBACK, -GAME_SCREEN_OFFSET_X, 0", almanac)
+        self.assertIn("mLastMouseX - mX", almanac)
+        self.assertIn("mLastMouseY - mY", almanac)
 
 
 if __name__ == "__main__":
