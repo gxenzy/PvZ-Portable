@@ -45,6 +45,17 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("PvZPortableActivity.class", launcher)
         self.assertNotIn("ResourceImportActivity.class", game_activity)
 
+    def test_modal_and_view_lawn_keep_the_game_content_centered(self):
+        store = (ROOT / "src" / "Lawn" / "Widget" / "StoreScreen.cpp").read_text(encoding="utf-8")
+        chooser = (ROOT / "src" / "Lawn" / "Widget" / "SeedChooserScreen.cpp").read_text(encoding="utf-8")
+        cutscene = (ROOT / "src" / "Lawn" / "CutScene.cpp").read_text(encoding="utf-8")
+
+        self.assertIn("Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, BOARD_HEIGHT)", store)
+        self.assertIn("mApp->mSeedChooserScreen->Move(GAME_SCREEN_OFFSET_X, SEED_CHOOSER_OFFSET_Y)", cutscene)
+        self.assertIn("int aBoardX = BOARD_IMAGE_WIDTH_OFFSET - BOARD_WIDTH", chooser)
+        self.assertIn("mBoard->Move(GAME_SCREEN_OFFSET_X - PvzpAnimateCurve", chooser)
+        self.assertIn("Move(GAME_SCREEN_OFFSET_X, SEED_CHOOSER_OFFSET_Y)", chooser)
+
 
 if __name__ == "__main__":
     unittest.main()
