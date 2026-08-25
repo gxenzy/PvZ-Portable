@@ -65,14 +65,18 @@ constinit const AchievementItem gAchievementList[MAX_ACHIEVEMENTS] = {
 
 AchievementsWidget::AchievementsWidget(LawnApp* theApp) {
 	mApp = theApp;
-	mWidth = 800;
-	mHeight = IMAGE_ACHEESEMENTS_CHINA->mHeight + IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG->mHeight + 15700;
+	mWidth = BOARD_WIDTH;
+	int aChinaH = (Sexy::IMAGE_ACHEESEMENTS_CHINA != nullptr) ? Sexy::IMAGE_ACHEESEMENTS_CHINA->mHeight : 0;
+	int aBgH = (Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG != nullptr) ? Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG->mHeight : 0;
+	mHeight = aChinaH + aBgH + 15700;
 	mScrollDirection = -1;
 	mScrollValue = 0;
 	mDefaultScrollValue = 30;
 	mScrollDecay = 1;
 	mDidPressMoreButton = false;
-	mMoreRockRect = Rect(710, 470, IMAGE_ACHEESEMENTS_MORE_ROCK->mWidth - 25, IMAGE_ACHEESEMENTS_MORE_ROCK->mHeight - 50);
+	int aMoreRockW = (Sexy::IMAGE_ACHEESEMENTS_MORE_ROCK != nullptr) ? Sexy::IMAGE_ACHEESEMENTS_MORE_ROCK->mWidth : 100;
+	int aMoreRockH = (Sexy::IMAGE_ACHEESEMENTS_MORE_ROCK != nullptr) ? Sexy::IMAGE_ACHEESEMENTS_MORE_ROCK->mHeight : 100;
+	mMoreRockRect = Rect(710, 470, aMoreRockW - 25, aMoreRockH - 50);
 }
 
 AchievementsWidget::~AchievementsWidget() {
@@ -106,9 +110,12 @@ void AchievementsWidget::Update() {
 }
 
 void AchievementsWidget::Draw(Graphics* g) {
-	g->DrawImage(IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG, 0, 0);
+	if (!Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG)
+		return;
 
-	int aHeight = IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG->mHeight;
+	g->DrawImage(Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG, 0, 0);
+
+	int aHeight = Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_BG->mHeight;
 	for (int i = 1; i <= 70; i++)
 		g->DrawImage(IMAGE_ACHEESEMENTS_HOLE_TILE, 0, aHeight * i);
 

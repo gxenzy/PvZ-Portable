@@ -160,7 +160,9 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_BLANK,
 		Sexy::IMAGE_BLANK
 	).release();
-	mZombatarButton->Resize(0, 0, Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS->mWidth, Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS->mHeight);
+	int aZombatarW = (Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS != nullptr) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS->mWidth : 100;
+	int aZombatarH = (Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS != nullptr) ? Sexy::IMAGE_REANIM_SELECTORSCREEN_WOODSIGN3_PRESS->mHeight : 50;
+	mZombatarButton->Resize(0, 0, aZombatarW, aZombatarH);
 	mZombatarButton->mClip = false;
 	mZombatarButton->mBtnNoDraw = true;
 	mZombatarButton->mMouseVisible = false;
@@ -174,7 +176,9 @@ GameSelector::GameSelector(LawnApp* theApp)
 		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL_PRESS,
 		Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL_PRESS
 	).release();
-	mAchievementsButton->Resize(20, mApp->mHeight - Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL->mHeight - 35, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL->mWidth, Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL->mHeight);
+	int aAchieveW = (Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL != nullptr) ? Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL->mWidth : 100;
+	int aAchieveH = (Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL != nullptr) ? Sexy::IMAGE_SELECTORSCREEN_ACHIEVEMENTS_PEDESTAL->mHeight : 100;
+	mAchievementsButton->Resize(20, mApp->mHeight - aAchieveH - 35, aAchieveW, aAchieveH);
 	mAchievementsButton->mClip = false;
 	mAchievementsButton->mBtnNoDraw = mHasTrophy;
 	mAchievementsButton->mMouseVisible = false;

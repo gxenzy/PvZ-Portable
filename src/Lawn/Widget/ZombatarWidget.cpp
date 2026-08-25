@@ -1082,6 +1082,8 @@ void ZombatarWidget::DrawCreate(Graphics* g)
 					aRect.mWidth - ZOMBATAR_CELL_INSET, aRect.mHeight - ZOMBATAR_CELL_INSET));
 				Color aSkinColor = ZombatarGetColor(mColor[ZOMBATAR_PAGE_SKIN]);
 				aSkinColor.mAlpha = aDim ? 0x80 : 0xff;
+			if (IMAGE_ZOMBATAR_ZOMBIE_BLANK_SKIN && IMAGE_ZOMBATAR_ZOMBIE_BLANK)
+			{
 				g->SetColorizeImages(true);
 				g->SetColor(aSkinColor);
 				g->DrawImage(IMAGE_ZOMBATAR_ZOMBIE_BLANK_SKIN,
@@ -1091,6 +1093,7 @@ void ZombatarWidget::DrawCreate(Graphics* g)
 				g->DrawImage(IMAGE_ZOMBATAR_ZOMBIE_BLANK,
 					Rect(aRect.mX - ZOMBATAR_CELL_ZOMBIE_MARGIN, aRect.mY - ZOMBATAR_CELL_ZOMBIE_MARGIN, aRect.mWidth, aRect.mHeight),
 					Rect(0, 0, IMAGE_ZOMBATAR_ZOMBIE_BLANK->mWidth, IMAGE_ZOMBATAR_ZOMBIE_BLANK->mHeight));
+			}
 			}
 			if (aDim)
 			{
