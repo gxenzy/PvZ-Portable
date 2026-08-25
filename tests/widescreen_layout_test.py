@@ -29,6 +29,8 @@ class WidescreenLayoutTests(unittest.TestCase):
         workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
 
         self.assertIn("-DPVZ_WIDESCREEN=ON", workflow)
+        self.assertIn('branches: [ "main", "codex/widescreen-android" ]', workflow)
+        self.assertIn("if: github.ref_name != 'codex/widescreen-android'", workflow)
 
 
 if __name__ == "__main__":

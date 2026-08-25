@@ -2,7 +2,7 @@ name: CI build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "codex/widescreen-android" ]
     tags: [ "*" ]
   pull_request:
     branches: [ "main" ]
@@ -19,6 +19,7 @@ env:
 jobs:
   build-archlinux:
     name: Build for Arch Linux (x86_64)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: ubuntu-latest
     container: archlinux:base-devel
     steps:
@@ -71,6 +72,7 @@ jobs:
 
   build-linux-static:
     name: Build for Linux (x86_64, static)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: ubuntu-latest
     container: quay.io/pypa/manylinux_2_34_x86_64 # Old glibc baseline with a recent toolchain
     steps:
@@ -290,6 +292,7 @@ jobs:
 
   build-windows-msys2-ucrt64:
     name: Build for Windows (MSYS2 UCRT64)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v6
@@ -332,6 +335,7 @@ jobs:
 
   build-windows-msvc-x64:
     name: Build for Windows (MSVC x64)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v6
@@ -384,6 +388,7 @@ jobs:
   # 32-bit coverage build: catches pointer-size/alignment assumptions.
   build-windows-msvc-x86:
     name: Build for Windows (MSVC x86)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v6
@@ -473,6 +478,7 @@ jobs:
 
   build-macos:
     name: Build for macOS (aarch64)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v6
@@ -688,6 +694,7 @@ jobs:
 
   build-ios:
     name: Build for iOS (arm64)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: macos-latest
     env:
       IOS_DEPLOY_TARGET: "15.0"
@@ -752,6 +759,7 @@ jobs:
 
   build-wasm:
     name: Build for WebAssembly (Emscripten)
+    if: github.ref_name != 'codex/widescreen-android'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
