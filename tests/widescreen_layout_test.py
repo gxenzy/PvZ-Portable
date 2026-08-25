@@ -12,11 +12,13 @@ class WidescreenLayoutTests(unittest.TestCase):
     def test_widescreen_build_uses_a_1066_by_600_logical_canvas(self):
         constants = (ROOT / "src" / "GameConstants.h").read_text(encoding="utf-8")
         app = (ROOT / "src" / "LawnApp.cpp").read_text(encoding="utf-8")
+        selector = (ROOT / "src" / "Lawn" / "Widget" / "GameSelector.cpp").read_text(encoding="utf-8")
 
         self.assertIn("WIDESCREEN_WIDTH = 1066", constants)
         self.assertIn("WIDESCREEN_PAD = (WIDESCREEN_WIDTH - BOARD_WIDTH) / 2", constants)
         self.assertIn("mWidth = WIDESCREEN_WIDTH", app)
         self.assertIn("gLawnApp->mWidth - theWidth", app)
+        self.assertIn("mClip = false", selector)
 
     def test_viewport_uses_the_logical_canvas_aspect_ratio(self):
         viewport = (ROOT / "src" / "SexyAppFramework" / "graphics" / "GLInterface.cpp").read_text(encoding="utf-8")

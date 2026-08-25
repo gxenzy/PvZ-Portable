@@ -69,6 +69,10 @@ GameSelector::GameSelector(LawnApp* theApp)
 		PvzpLoadResources(resource.c_str());
 
 	mApp = theApp;
+	// The selector background is assembled from wide left/center/right artwork.
+	// Keep the original 800px interaction area, but let that artwork fill the
+	// surrounding 16:9 canvas instead of clipping it to the old 4:3 bounds.
+	mClip = false;
 	mLevel = 1;
 	mLoading = false;
 	mHasTrophy = false;
