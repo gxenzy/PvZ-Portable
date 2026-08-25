@@ -56,6 +56,24 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("mBoard->Move(GAME_SCREEN_OFFSET_X - PvzpAnimateCurve", chooser)
         self.assertIn("Move(GAME_SCREEN_OFFSET_X, SEED_CHOOSER_OFFSET_Y)", chooser)
 
+    def test_widescreen_draws_original_textures_across_the_full_canvas(self):
+        title = (ROOT / "src" / "Lawn" / "Widget" / "TitleScreen.cpp").read_text(encoding="utf-8")
+        selector = (ROOT / "src" / "Lawn" / "Widget" / "GameSelector.cpp").read_text(encoding="utf-8")
+        board = (ROOT / "src" / "Lawn" / "Board.cpp").read_text(encoding="utf-8")
+        challenge = (ROOT / "src" / "Lawn" / "Widget" / "ChallengeScreen.cpp").read_text(encoding="utf-8")
+        award = (ROOT / "src" / "Lawn" / "Widget" / "AwardScreen.cpp").read_text(encoding="utf-8")
+        store = (ROOT / "src" / "Lawn" / "Widget" / "StoreScreen.cpp").read_text(encoding="utf-8")
+        almanac = (ROOT / "src" / "Lawn" / "Widget" / "AlmanacDialog.cpp").read_text(encoding="utf-8")
+
+        self.assertIn("DrawImage(IMAGE_TITLESCREEN, -GAME_SCREEN_OFFSET_X, 0)", title)
+        self.assertIn("aBackdropG.Translate(-GAME_SCREEN_OFFSET_X, 0)", selector)
+        self.assertIn("-BOARD_OFFSET - GAME_SCREEN_OFFSET_X", board)
+        self.assertIn("FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight)", board)
+        self.assertIn("IMAGE_CHALLENGE_BACKGROUND, -GAME_SCREEN_OFFSET_X, 0", challenge)
+        self.assertIn("IMAGE_AWARDSCREEN_BACK, -GAME_SCREEN_OFFSET_X, 0", award)
+        self.assertIn("IMAGE_STORE_BACKGROUND, -GAME_SCREEN_OFFSET_X, 0", store)
+        self.assertIn("IMAGE_ALMANAC_INDEXBACK, -GAME_SCREEN_OFFSET_X, 0", almanac)
+
 
 if __name__ == "__main__":
     unittest.main()
