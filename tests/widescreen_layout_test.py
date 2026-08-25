@@ -92,6 +92,15 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight)", credits)
         self.assertIn("aTransformBackground2.mTransX - BOARD_WIDTH / 2 - GAME_SCREEN_OFFSET_X", credits)
 
+    def test_android_importer_applies_the_widescreen_texture_pack_after_goty(self):
+        importer = (ROOT / "android" / "app" / "src" / "main" / "java" / "io" / "github" / "wszqkzqk" / "pvzportable" / "ResourceImportActivity.java").read_text(encoding="utf-8")
+        layout = (ROOT / "android" / "app" / "src" / "main" / "res" / "layout" / "activity_resource_import.xml").read_text(encoding="utf-8")
+
+        self.assertIn("applyWidescreenTextureModFromZip(Uri uri)", importer)
+        self.assertIn('"main.pak".equals(name)', importer)
+        self.assertIn("WIDESCREEN_TEXTURE_MARKER", importer)
+        self.assertIn("btn_pick_widescreen_texture_zip", layout)
+
 
 if __name__ == "__main__":
     unittest.main()
