@@ -115,6 +115,7 @@ endif()
 option(PVZ_DEBUG "Enable PVZ_DEBUG macro to enable cheats, hidden features, etc." ${PVZ_DEBUG_DEFAULT})
 option(CONSOLE "Show console on Windows" ${WIN_CONSOLE_DEFAULT})
 option(DO_FIX_BUGS "Define DO_FIX_BUGS macro (Community fixes for original game bugs of 1.2.0.1073 GOTY Edition)" OFF)
+option(PVZ_WIDESCREEN "Use the centered 16:9 game canvas (1066x600)" OFF)
 
 if(EMSCRIPTEN)
 	list(PREPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
@@ -188,6 +189,7 @@ target_include_directories(pvz-portable PRIVATE
 target_compile_definitions(pvz-portable PRIVATE
 	$<$<BOOL:${PVZ_DEBUG}>:PVZ_DEBUG>
 	$<$<BOOL:${DO_FIX_BUGS}>:DO_FIX_BUGS>
+	$<$<BOOL:${PVZ_WIDESCREEN}>:PVZ_WIDESCREEN>
 )
 target_compile_features(pvz-portable PRIVATE cxx_std_20)
 set_target_properties(pvz-portable PROPERTIES CXX_EXTENSIONS OFF)

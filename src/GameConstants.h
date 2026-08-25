@@ -27,6 +27,15 @@ constexpr const double PI = 3.141592653589793;
 // Constants
 constexpr const int BOARD_WIDTH = 800;
 constexpr const int BOARD_HEIGHT = 600;
+constexpr const int WIDESCREEN_WIDTH = 1066;
+constexpr const int WIDESCREEN_PAD = (WIDESCREEN_WIDTH - BOARD_WIDTH) / 2;
+#ifdef PVZ_WIDESCREEN
+constexpr const int GAME_SCREEN_WIDTH = WIDESCREEN_WIDTH;
+constexpr const int GAME_SCREEN_OFFSET_X = WIDESCREEN_PAD;
+#else
+constexpr const int GAME_SCREEN_WIDTH = BOARD_WIDTH;
+constexpr const int GAME_SCREEN_OFFSET_X = 0;
+#endif
 constexpr const int WIDE_BOARD_WIDTH = 800;
 constexpr const int BOARD_OFFSET = 220;
 constexpr const int BOARD_EDGE = -100;

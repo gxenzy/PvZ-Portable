@@ -880,7 +880,7 @@ void CutScene::StartLevelIntro()
 
 	if (IsScrolledLeftAtStart())
 	{
-		mBoard->Move(220, 0);
+		mBoard->Move(GAME_SCREEN_OFFSET_X + 220, 0);
 	}
 	if (IsNonScrollingCutscene() && mCrazyDaveTime == 0)
 	{
@@ -972,7 +972,7 @@ void CutScene::CancelIntro()
 		mCutsceneTime = TimeSeedChoserSlideOnEnd + mCrazyDaveTime - 20;
 		if (!IsNonScrollingCutscene())
 		{
-			mBoard->Move(mApp->mWidth - BOARD_IMAGE_WIDTH_OFFSET, 0);
+			mBoard->Move(mApp->mWidth - (BOARD_IMAGE_WIDTH_OFFSET + GAME_SCREEN_OFFSET_X), 0);
 		}
 		if (mBoard->mAdvice->mMessageStyle == MessageStyle::MESSAGE_STYLE_HOUSE_NAME)
 		{
@@ -1135,14 +1135,14 @@ void CutScene::AnimateBoard()
 	}
 
 	// Pan the board right
-	int aBoardOffset = IsScrolledLeftAtStart() ? BOARD_OFFSET : 0;
+	int aBoardOffset = GAME_SCREEN_OFFSET_X + (IsScrolledLeftAtStart() ? BOARD_OFFSET : 0);
 	if (mCutsceneTime <= aTimePanRightStart)
 	{
 		mBoard->Move(aBoardOffset, 0);
 	}
 	if (mCutsceneTime > aTimePanRightStart && mCutsceneTime <= aTimePanRightEnd)
 	{
-		int aPanOffset = CalcPosition(aTimePanRightStart, aTimePanRightEnd, -aBoardOffset, BOARD_IMAGE_WIDTH_OFFSET - mApp->mWidth);
+		int aPanOffset = CalcPosition(aTimePanRightStart, aTimePanRightEnd, -aBoardOffset, BOARD_IMAGE_WIDTH_OFFSET + GAME_SCREEN_OFFSET_X - mApp->mWidth);
 		mBoard->Move(-aPanOffset, 0);
 	}
 
@@ -1155,7 +1155,7 @@ void CutScene::AnimateBoard()
 		// Seed chooser slides on
 		if (mCutsceneTime > aTimeSeedChoserSlideOnStart && mCutsceneTime <= aTimeSeedChoserSlideOnEnd)
 		{
-			aSeedChoser->Move(0, CalcPosition(aTimeSeedChoserSlideOnStart, aTimeSeedChoserSlideOnEnd, SEED_CHOOSER_OFFSET_Y, 0));
+			aSeedChoser->Move(GAME_SCREEN_OFFSET_X, CalcPosition(aTimeSeedChoserSlideOnStart, aTimeSeedChoserSlideOnEnd, SEED_CHOOSER_OFFSET_Y, 0));
 			aSeedChoser->mMenuButton->mY = CalcPosition(aTimeSeedChoserSlideOnStart, aTimeSeedChoserSlideOnEnd, -50, -10);
 			aSeedChoser->mMenuButton->mBtnNoDraw = false;
 		}
@@ -1164,7 +1164,7 @@ void CutScene::AnimateBoard()
 		int aTimeSeedChoserSlideOffEnd = TimeSeedChoserSlideOffEnd + mCrazyDaveTime;
 		if (mCutsceneTime > aTimeSeedChoserSlideOffStart && mCutsceneTime <= aTimeSeedChoserSlideOffEnd)
 		{
-			aSeedChoser->Move(0, CalcPosition(aTimeSeedChoserSlideOffStart, aTimeSeedChoserSlideOffEnd, 0, SEED_CHOOSER_OFFSET_Y));
+			aSeedChoser->Move(GAME_SCREEN_OFFSET_X, CalcPosition(aTimeSeedChoserSlideOffStart, aTimeSeedChoserSlideOffEnd, 0, SEED_CHOOSER_OFFSET_Y));
 			aSeedChoser->mMenuButton->mDisabled = true;
 		}
 	}
@@ -1172,7 +1172,7 @@ void CutScene::AnimateBoard()
 	// Pan the board left
 	if (mCutsceneTime > aTimePanLeftStart)
 	{
-		int aPanOffset = CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, BOARD_IMAGE_WIDTH_OFFSET - mApp->mWidth, 0);
+		int aPanOffset = CalcPosition(aTimePanLeftStart, aTimePanLeftEnd, BOARD_IMAGE_WIDTH_OFFSET + GAME_SCREEN_OFFSET_X - mApp->mWidth, -GAME_SCREEN_OFFSET_X);
 		mBoard->Move(-aPanOffset, 0);
 	}
 
@@ -1473,7 +1473,7 @@ void CutScene::UpdateZombiesWon()
 {
 	if (mCutsceneTime > LostTimePanRightStart && mCutsceneTime <= LostTimePanRightEnd)
 	{
-		mBoard->Move(CalcPosition(LostTimePanRightStart, LostTimePanRightEnd, 0, BOARD_OFFSET), 0);
+		mBoard->Move(CalcPosition(LostTimePanRightStart, LostTimePanRightEnd, GAME_SCREEN_OFFSET_X, GAME_SCREEN_OFFSET_X + BOARD_OFFSET), 0);
 	}
 
 	if (mCutsceneTime == LostTimeBrainGraphicStart - 400 || mCutsceneTime == LostTimeBrainGraphicStart - 900)
@@ -2242,7 +2242,7 @@ void CutScene::DrawUpsell(Graphics* g)
 
 void CutScene::UpdateIntro()
 {
-	mBoard->Move(-PvzpAnimateCurve(TimeIntro_PanRightStart, TimeIntro_PanRightEnd, mCutsceneTime, -100, 100, PvzpCurves::CURVE_LINEAR), 0);
+	mBoard->Move(GAME_SCREEN_OFFSET_X - PvzpAnimateCurve(TimeIntro_PanRightStart, TimeIntro_PanRightEnd, mCutsceneTime, -100, 100, PvzpCurves::CURVE_LINEAR), 0);
 
 	if (mCutsceneTime == 10)
 	{

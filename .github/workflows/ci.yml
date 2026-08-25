@@ -520,7 +520,7 @@ jobs:
         path: dist/
 
   build-android:
-    name: Build for Android (arm64-v8a)
+    name: Build Widescreen Android (arm64-v8a)
     runs-on: ubuntu-latest
     env:
       ANDROID_API: "24"
@@ -615,6 +615,7 @@ jobs:
           -DANDROID_ABI=$ABI \
           -DANDROID_PLATFORM=android-$ANDROID_API \
           -DSDL2_DIR=$SDL2_PREFIX/lib/cmake/SDL2 \
+          -DPVZ_WIDESCREEN=ON \
           -DCMAKE_BUILD_TYPE=Release
 
         cmake --build $BUILD_DIR -j$(nproc)

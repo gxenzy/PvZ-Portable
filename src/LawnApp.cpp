@@ -145,7 +145,11 @@ LawnApp::LawnApp()
 	mEffectSystem = nullptr;
 	mReanimatorCache = nullptr;
 	mCloseRequest = false;
+	#ifdef PVZ_WIDESCREEN
+	mWidth = WIDESCREEN_WIDTH;
+	#else
 	mWidth = BOARD_WIDTH;
+	#endif
 	mHeight = BOARD_HEIGHT;
 	mFullscreenBits = 32;
 	mAppCounter = 0;
@@ -444,7 +448,7 @@ void LawnApp::MakeNewBoard()
 {
 	KillBoard();
 	mBoard = new Board(this);
-	mBoard->Resize(0, 0, mWidth, mHeight);
+	mBoard->Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, mHeight);
 	mWidgetManager->AddWidget(mBoard);
 	mWidgetManager->BringToBack(mBoard);
 	mWidgetManager->SetFocus(mBoard);
@@ -533,7 +537,7 @@ void LawnApp::ShowGameSelector()
 
 	mGameScene = GameScenes::SCENE_MENU;
 	mGameSelector = new GameSelector(this);
-	mGameSelector->Resize(0, 0, mWidth, mHeight);
+	mGameSelector->Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, mHeight);
 	mWidgetManager->AddWidget(mGameSelector);
 	mWidgetManager->BringToBack(mGameSelector);
 	mWidgetManager->SetFocus(mGameSelector);
@@ -558,7 +562,7 @@ void LawnApp::ShowAwardScreen(AwardType theAwardType, bool theShowAchievements)
 {
 	mGameScene = GameScenes::SCENE_AWARD;
 	mAwardScreen = new AwardScreen(this, theAwardType, theShowAchievements);
-	mAwardScreen->Resize(0, 0, mWidth, mHeight);
+	mAwardScreen->Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, mHeight);
 	mWidgetManager->AddWidget(mAwardScreen);
 	mWidgetManager->BringToBack(mAwardScreen);
 	mWidgetManager->SetFocus(mAwardScreen);
@@ -577,7 +581,7 @@ void LawnApp::KillAwardScreen()
 void LawnApp::ShowCreditScreen()
 {
 	mCreditScreen = new CreditScreen(this);
-	mCreditScreen->Resize(0, 0, mWidth, mHeight);
+	mCreditScreen->Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, mHeight);
 	mWidgetManager->AddWidget(mCreditScreen);
 	mWidgetManager->BringToBack(mCreditScreen);
 	mWidgetManager->SetFocus(mCreditScreen);
@@ -597,7 +601,7 @@ void LawnApp::ShowChallengeScreen(ChallengePage thePage)
 {
 	mGameScene = GameScenes::SCENE_CHALLENGE;
 	mChallengeScreen = new ChallengeScreen(this, thePage);
-	mChallengeScreen->Resize(0, 0, mWidth, mHeight);
+	mChallengeScreen->Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, mHeight);
 	mWidgetManager->AddWidget(mChallengeScreen);
 	mWidgetManager->BringToBack(mChallengeScreen);
 	mWidgetManager->SetFocus(mChallengeScreen);
@@ -639,7 +643,7 @@ void LawnApp::ShowSeedChooserScreen()
 	PVZP_ASSERT(mSeedChooserScreen == nullptr);
 
 	mSeedChooserScreen = new SeedChooserScreen();
-	mSeedChooserScreen->Resize(0, 0, mWidth, mHeight);
+	mSeedChooserScreen->Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, mHeight);
 	mWidgetManager->AddWidget(mSeedChooserScreen);
 	mWidgetManager->BringToBack(mSeedChooserScreen);
 }
@@ -1266,7 +1270,7 @@ void LawnApp::Init()
 	mMaxTime = GetInteger("MaxTime", 60);
 
 	mTitleScreen = new TitleScreen(this);
-	mTitleScreen->Resize(0, 0, mWidth, mHeight);
+	mTitleScreen->Resize(GAME_SCREEN_OFFSET_X, 0, BOARD_WIDTH, mHeight);
 	mWidgetManager->AddWidget(mTitleScreen);
 	mWidgetManager->SetFocus(mTitleScreen);
 
@@ -2017,7 +2021,7 @@ void LawnApp::ButtonDepress(int theId)
 
 void LawnApp::CenterDialog(Dialog* theDialog, int theWidth, int theHeight)
 {
-	theDialog->Resize((BOARD_WIDTH - theWidth) / 2, (BOARD_HEIGHT - theHeight) / 2, theWidth, theHeight);
+	theDialog->Resize((mWidth - theWidth) / 2, (mHeight - theHeight) / 2, theWidth, theHeight);
 }
 
 void LawnApp::PlayFoley(FoleyType theFoleyType)

@@ -5742,7 +5742,7 @@ void Board::Update()
 		mShakeCounter--;
 		if (mShakeCounter == 0)
 		{
-			mX = 0;
+			mX = GAME_SCREEN_OFFSET_X;
 			mY = 0;
 		}
 		else
@@ -5751,7 +5751,7 @@ void Board::Update()
 			{
 				mShakeAmountX = -mShakeAmountX;
 			}
-			mX = PvzpAnimateCurve(12, 0, mShakeCounter, 0, mShakeAmountX, PvzpCurves::CURVE_BOUNCE);
+			mX = GAME_SCREEN_OFFSET_X + PvzpAnimateCurve(12, 0, mShakeCounter, 0, mShakeAmountX, PvzpCurves::CURVE_BOUNCE);
 			mY = PvzpAnimateCurve(12, 0, mShakeCounter, 0, mShakeAmountY, PvzpCurves::CURVE_BOUNCE);
 		}
 	}
