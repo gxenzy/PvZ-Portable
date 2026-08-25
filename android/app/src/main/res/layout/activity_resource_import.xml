@@ -68,6 +68,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_pick_dir"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btn_pick_widescreen_texture_zip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_pick_widescreen_texture_zip"
+            android:enabled="false"
             android:layout_marginBottom="24dp" />
 
         <!-- Save data section -->

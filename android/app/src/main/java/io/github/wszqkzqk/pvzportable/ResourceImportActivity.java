@@ -56,12 +56,14 @@ import java.util.zip.ZipInputStream;
 public class ResourceImportActivity extends AppCompatActivity {
     private static final String TAG = "ResImport";
     private static final int BUFFER_SIZE = 8192;
+    private static final String WIDESCREEN_TEXTURE_MARKER = ".pvz-widescreen-textures";
 
     private File gameDir;
     private TextView statusText;
     private ProgressBar progressBar;
     private Button btnPickZip;
     private Button btnPickDir;
+    private Button btnPickWidescreenTextureZip;
     private Button btnExportSave;
     private Button btnImportSaveZip;
     private Button btnImportSaveDir;
@@ -75,6 +77,11 @@ public class ResourceImportActivity extends AppCompatActivity {
     private final ActivityResultLauncher<Uri> dirPicker =
         registerForActivityResult(new ActivityResultContracts.OpenDocumentTree(), uri -> {
             if (uri != null) importFromDirectory(uri);
+        });
+
+    private final ActivityResultLauncher<String[]> widescreenTextureZipPicker =
+        registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
+            if (uri != null) applyWidescreenTextureModFromZip(uri);
         });
 
     private final ActivityResultLauncher<String> saveExporter =
@@ -110,6 +117,7 @@ public class ResourceImportActivity extends AppCompatActivity {
         progressBar   = findViewById(R.id.progress_bar);
         btnPickZip    = findViewById(R.id.btn_pick_zip);
         btnPickDir    = findViewById(R.id.btn_pick_dir);
+        btnPickWidescreenTextureZip = findViewById(R.id.btn_pick_widescreen_texture_zip);
         btnExportSave = findViewById(R.id.btn_export_save);
         btnImportSaveZip = findViewById(R.id.btn_import_save_zip);
         btnImportSaveDir = findViewById(R.id.btn_import_save_dir);
@@ -120,6 +128,9 @@ public class ResourceImportActivity extends AppCompatActivity {
         );
         btnPickDir.setOnClickListener(v ->
             dirPicker.launch(null)
+        );
+        btnPickWidescreenTextureZip.setOnClickListener(v ->
+            widescreenTextureZipPicker.launch(new String[]{"application/zip", "application/x-zip-compressed"})
         );
         btnExportSave.setOnClickListener(v ->
             saveExporter.launch("pvz-portable-savedata.zip")
@@ -148,10 +159,14 @@ public class ResourceImportActivity extends AppCompatActivity {
         return save.isDirectory() && save.list() != null && save.list().length > 0;
     }
 
+    private boolean hasWidescreenTexturePack() {
+        return hasResources() && new File(gameDir, WIDESCREEN_TEXTURE_MARKER).isFile();
+    }
+
     private void refreshStatus() {
         boolean ready = hasResources();
         if (ready) {
-            statusText.setText(R.string.status_ready);
+            statusText.setText(hasWidescreenTexturePack() ? R.string.status_ready_widescreen : R.string.status_ready);
             btnLaunchGame.setEnabled(true);
         } else {
             statusText.setText(R.string.status_missing);
@@ -192,6 +207,7 @@ public class ResourceImportActivity extends AppCompatActivity {
                     }
                     zis.closeEntry();
                 }
+                clearWidescreenTextureMarker();
                 runOnUiThread(() -> {
                     Toast.makeText(this, R.string.import_success, Toast.LENGTH_SHORT).show();
                     refreshStatus();
@@ -206,6 +222,84 @@ public class ResourceImportActivity extends AppCompatActivity {
                 runOnUiThread(() -> setWorking(false));
             }
         }).start();
+    }
+
+    /**
+     * Replaces only the resource pack after the user has imported their GOTY base files.
+     * The Windows DLL loader is not usable on Android; PvZ Portable implements its
+     * widescreen behavior natively and consumes this widescreen texture pack directly.
+     */
+    private void applyWidescreenTextureModFromZip(Uri uri) {
+        if (!hasResources()) {
+            Toast.makeText(this, R.string.widescreen_import_requires_base, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        setWorking(true);
+        new Thread(() -> {
+            File tempPak = null;
+            try (InputStream is = getContentResolver().openInputStream(uri);
+                 ZipInputStream zis = new ZipInputStream(is)) {
+                if (is == null) throw new IOException("Cannot open ZIP");
+
+                tempPak = File.createTempFile("widescreen-", ".pak", gameDir);
+                boolean foundPak = false;
+                ZipEntry entry;
+                while ((entry = zis.getNextEntry()) != null) {
+                    if (entry.isDirectory()) {
+                        zis.closeEntry();
+                        continue;
+                    }
+
+                    String name = stripCommonPrefix(entry.getName());
+                    if (!"main.pak".equals(name)) {
+                        zis.closeEntry();
+                        continue;
+                    }
+
+                    try (OutputStream os = new BufferedOutputStream(new FileOutputStream(tempPak), BUFFER_SIZE)) {
+                        byte[] buf = new byte[BUFFER_SIZE];
+                        int len;
+                        while ((len = zis.read(buf)) > 0) os.write(buf, 0, len);
+                    }
+                    foundPak = tempPak.length() > 0;
+                    zis.closeEntry();
+                    break;
+                }
+
+                if (!foundPak) throw new IOException("The widescreen ZIP does not contain main.pak");
+
+                File installedPak = new File(gameDir, "main.pak");
+                File backupPak = new File(gameDir, "main.pak.goty-backup");
+                if (backupPak.exists() && !backupPak.delete()) throw new IOException("Cannot replace previous GOTY backup");
+                if (installedPak.exists() && !installedPak.renameTo(backupPak)) throw new IOException("Cannot back up GOTY main.pak");
+                if (!tempPak.renameTo(installedPak)) {
+                    if (backupPak.exists()) backupPak.renameTo(installedPak);
+                    throw new IOException("Cannot install widescreen main.pak");
+                }
+                tempPak = null;
+                new File(gameDir, WIDESCREEN_TEXTURE_MARKER).createNewFile();
+
+                runOnUiThread(() -> {
+                    Toast.makeText(this, R.string.widescreen_import_success, Toast.LENGTH_SHORT).show();
+                    refreshStatus();
+                });
+            } catch (IOException e) {
+                Log.e(TAG, "Widescreen texture import failed", e);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, getString(R.string.import_failed, e.getMessage()), Toast.LENGTH_LONG).show();
+                    refreshStatus();
+                });
+            } finally {
+                if (tempPak != null && tempPak.exists()) tempPak.delete();
+                runOnUiThread(() -> setWorking(false));
+            }
+        }).start();
+    }
+
+    private void clearWidescreenTextureMarker() {
+        File marker = new File(gameDir, WIDESCREEN_TEXTURE_MARKER);
+        if (marker.exists() && !marker.delete()) Log.w(TAG, "Cannot clear widescreen texture marker");
     }
 
     /**
@@ -256,6 +350,7 @@ public class ResourceImportActivity extends AppCompatActivity {
                 }
 
                 copyDocumentTree(sourceDir, gameDir);
+                clearWidescreenTextureMarker();
 
                 runOnUiThread(() -> {
                     Toast.makeText(this, R.string.import_success, Toast.LENGTH_SHORT).show();
@@ -416,6 +511,7 @@ public class ResourceImportActivity extends AppCompatActivity {
         progressBar.setVisibility(working ? View.VISIBLE : View.GONE);
         btnPickZip.setEnabled(!working);
         btnPickDir.setEnabled(!working);
+        btnPickWidescreenTextureZip.setEnabled(!working && hasResources());
         btnExportSave.setEnabled(!working && hasSaveData());
         btnImportSaveZip.setEnabled(!working);
         btnImportSaveDir.setEnabled(!working);

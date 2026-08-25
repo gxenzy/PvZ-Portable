@@ -101,6 +101,12 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("WIDESCREEN_TEXTURE_MARKER", importer)
         self.assertIn("btn_pick_widescreen_texture_zip", layout)
 
+    def test_widescreen_branch_builds_the_portable_windows_executable_too(self):
+        workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+        windows_x64 = workflow.split("  build-windows-msvc-x64:", 1)[1].split("  build-windows-msvc-x86:", 1)[0]
+
+        self.assertNotIn("if: github.ref_name != 'codex/widescreen-android'", windows_x64)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -335,7 +335,6 @@ jobs:
 
   build-windows-msvc-x64:
     name: Build for Windows (MSVC x64)
-    if: github.ref_name != 'codex/widescreen-android'
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v6
