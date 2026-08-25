@@ -84,6 +84,13 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("IMAGE_WAVESIDE, BOARD_WIDTH + GAME_SCREEN_OFFSET_X, 40", board)
         self.assertIn("float aPosX = x * 80 + mFogOffset + 145", board)
 
+    def test_credits_backgrounds_and_fades_cover_the_widescreen_canvas(self):
+        credits = (ROOT / "src" / "Lawn" / "Widget" / "CreditScreen.cpp").read_text(encoding="utf-8")
+
+        self.assertIn("aWideG.Translate(-GAME_SCREEN_OFFSET_X, 0)", credits)
+        self.assertIn("aWideG.DrawImage(IMAGE_BACKGROUND1, 0, 0)", credits)
+        self.assertIn("FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight)", credits)
+
 
 if __name__ == "__main__":
     unittest.main()
