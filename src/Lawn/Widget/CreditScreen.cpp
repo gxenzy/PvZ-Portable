@@ -726,7 +726,7 @@ void CreditScreen::DrawOverlay(Graphics* g)
 		if (aFadeAlpha > 0)
 		{
 			g->SetColor(Color(0, 0, 0, aFadeAlpha));
-			g->FillRect(0, 0, mWidth, mHeight);
+			g->FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight);
 		}
 	}
 }
@@ -826,7 +826,7 @@ void CreditScreen::Draw(Graphics* g)
 	if (!mPreloaded)
 	{
 		g->SetColor(Color::Black);
-		g->FillRect(0, 0, mWidth, mHeight);
+		g->FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight);
 		mDrawCount = 1;
 		return;
 	}
@@ -834,11 +834,13 @@ void CreditScreen::Draw(Graphics* g)
 	mDrawCount++;
 	if (mDrawCount == 2)
 	{
-		g->DrawImage(IMAGE_BACKGROUND1, 0, 0);
-		g->DrawImage(IMAGE_BACKGROUND2, 0, 0);
-		g->DrawImage(IMAGE_BACKGROUND3, 0, 0);
-		g->DrawImage(IMAGE_BACKGROUND4, 0, 0);
-		g->DrawImage(IMAGE_BACKGROUND5, 0, 0);
+		Graphics aWideG(*g);
+		aWideG.Translate(-GAME_SCREEN_OFFSET_X, 0);
+		aWideG.DrawImage(IMAGE_BACKGROUND1, 0, 0);
+		aWideG.DrawImage(IMAGE_BACKGROUND2, 0, 0);
+		aWideG.DrawImage(IMAGE_BACKGROUND3, 0, 0);
+		aWideG.DrawImage(IMAGE_BACKGROUND4, 0, 0);
+		aWideG.DrawImage(IMAGE_BACKGROUND5, 0, 0);
 		DrawReanimToPreload(g, ReanimationType::REANIM_CREDITS_BOSSDANCE);
 		DrawReanimToPreload(g, ReanimationType::REANIM_CREDITS_CRAZYDAVE);
 		DrawReanimToPreload(g, ReanimationType::REANIM_ZOMBIE_CREDITS_DANCE);
@@ -846,7 +848,7 @@ void CreditScreen::Draw(Graphics* g)
 		DrawReanimToPreload(g, ReanimationType::REANIM_SUNFLOWER);
 	}
 	g->SetColor(Color::Black);
-	g->FillRect(0, 0, mWidth, mHeight);
+	g->FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight);
 
 	Reanimation* aCreditsReanim = mApp->ReanimationGet(mCreditsReanimID);
 	int aFrameCount = aCreditsReanim->mDefinition->mTracks.tracks->mTransforms.count - 1;
@@ -886,20 +888,20 @@ void CreditScreen::Draw(Graphics* g)
 		if (aTransformBackground2.mFrame != -1.0f)
 		{
 			aBackground2G.ClipRect(aTransformBackground2.mTransX, aTransformBackground2.mTransY, aTransformBackground2.mImage->mWidth - 1, aTransformBackground2.mImage->mHeight - 1);
-			aBackground2G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground2.mTransX - BOARD_WIDTH / 2, aTransformBackground2.mTransY - BOARD_HEIGHT / 2);
+			aBackground2G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground2.mTransX - BOARD_WIDTH / 2 - GAME_SCREEN_OFFSET_X, aTransformBackground2.mTransY - BOARD_HEIGHT / 2);
 			aBackground2G.ClearClipRect();
 		}
 		if (aTransformBackground3.mFrame != -1.0f)
 		{
 			Graphics aBackground3G(*g);
 			aBackground3G.ClipRect(aTransformBackground3.mTransX, aTransformBackground3.mTransY, aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
-			aBackground3G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground3.mTransX - BOARD_WIDTH / 2, aTransformBackground3.mTransY - BOARD_HEIGHT / 2);
+			aBackground3G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground3.mTransX - BOARD_WIDTH / 2 - GAME_SCREEN_OFFSET_X, aTransformBackground3.mTransY - BOARD_HEIGHT / 2);
 		}
 		if (aTransformBackground4.mFrame != -1.0f)
 		{
 			Graphics aBackground4G(*g);
 			aBackground4G.ClipRect(aTransformBackground4.mTransX, aTransformBackground4.mTransY, aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
-			aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
+			aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2 - GAME_SCREEN_OFFSET_X, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
 		}
 	}
 	if (aDrawClippedBackgrounds2)
@@ -919,7 +921,7 @@ void CreditScreen::Draw(Graphics* g)
 			Graphics aBackground1G(*g);
 			aBackground1G.ClipRect(aTransformBackground1.mTransX, aTransformBackground1.mTransY, aTransformBackground1.mImage->mWidth - 1, aTransformBackground1.mImage->mHeight - 1);
 			// Digger zombie says "I like your tricycle" at this position
-			aBackground1G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground1.mTransX - BOARD_WIDTH / 10, aTransformBackground1.mTransY - BOARD_HEIGHT * 0.6f);
+			aBackground1G.DrawImageF(IMAGE_BACKGROUND1, aTransformBackground1.mTransX - BOARD_WIDTH / 10 - GAME_SCREEN_OFFSET_X, aTransformBackground1.mTransY - BOARD_HEIGHT * 0.6f);
 		}
 		if (aTransformBackground3.mFrame != -1.0f)
 		{
@@ -927,14 +929,14 @@ void CreditScreen::Draw(Graphics* g)
 			aBackground3G.mTransX += aTransformBackground3.mTransX - 20.0f;
 			aBackground3G.mTransY += aTransformBackground3.mTransY - 260.0f;
 			aBackground3G.ClipRect(20, 260, aTransformBackground3.mImage->mWidth - 1, aTransformBackground3.mImage->mHeight - 1);
-			aBackground3G.DrawImageF(IMAGE_BACKGROUND3, -220.0f, 0.0f);
-			aBackground3G.DrawImageF(IMAGE_POOL, 34.0f, 278.0f);
+			aBackground3G.DrawImageF(IMAGE_BACKGROUND3, -220.0f - GAME_SCREEN_OFFSET_X, 0.0f);
+			aBackground3G.DrawImageF(IMAGE_POOL, 34.0f - GAME_SCREEN_OFFSET_X, 278.0f);
 		}
 		if (aTransformBackground4.mFrame != -1.0f)
 		{
 			Graphics aBackground4G(*g);
 			aBackground4G.ClipRect(aTransformBackground4.mTransX, aTransformBackground4.mTransY, aTransformBackground4.mImage->mWidth - 1, aTransformBackground4.mImage->mHeight - 1);
-			aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
+			aBackground4G.DrawImageF(IMAGE_BACKGROUND2, aTransformBackground4.mTransX - BOARD_WIDTH / 2 - GAME_SCREEN_OFFSET_X, aTransformBackground4.mTransY - BOARD_HEIGHT / 2);
 		}
 	}
 	aCreditsReanim->DrawRenderGroup(g, 1);

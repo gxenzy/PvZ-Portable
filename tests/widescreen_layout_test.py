@@ -90,6 +90,7 @@ class WidescreenLayoutTests(unittest.TestCase):
         self.assertIn("aWideG.Translate(-GAME_SCREEN_OFFSET_X, 0)", credits)
         self.assertIn("aWideG.DrawImage(IMAGE_BACKGROUND1, 0, 0)", credits)
         self.assertIn("FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight)", credits)
+        self.assertIn("aTransformBackground2.mTransX - BOARD_WIDTH / 2 - GAME_SCREEN_OFFSET_X", credits)
 
 
 if __name__ == "__main__":
