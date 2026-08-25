@@ -265,7 +265,7 @@ bool AwardScreen::IsPaperNote()
 
 void AwardScreen::DrawBottom(Graphics* g, std::string_view theTitle, std::string_view theAward, std::string_view theMessage)
 {
-	g->DrawImage(Sexy::IMAGE_AWARDSCREEN_BACK, 0, 0);
+	g->DrawImage(Sexy::IMAGE_AWARDSCREEN_BACK, -GAME_SCREEN_OFFSET_X, 0);
 	PvzpDrawString(g, theTitle, BOARD_WIDTH / 2, 58, Sexy::FONT_DWARVENTODCRAFT24, Color(213, 159, 43), DS_ALIGN_CENTER);
 	PvzpDrawString(g, theAward, BOARD_WIDTH / 2, 326, Sexy::FONT_DWARVENTODCRAFT18YELLOW, Color::White, DS_ALIGN_CENTER);
 	PvzpDrawStringWrapped(g, theMessage, Rect(285, 360, 230, 90), Sexy::FONT_BRIANNETOD16, Color(40, 50, 90), DS_ALIGN_CENTER_VERTICAL_MIDDLE);

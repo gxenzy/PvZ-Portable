@@ -460,11 +460,11 @@ void StoreScreen::Draw(Graphics* g)
 	int aStoreSignPosY = PvzpAnimateCurve(50, 110, mStoreTime, -150, 0, CURVE_EASE_IN_OUT);
 	if (mApp->IsNight())
 	{
-		g->DrawImage(Sexy::IMAGE_STORE_BACKGROUNDNIGHT, 0, 0);
+		g->DrawImage(Sexy::IMAGE_STORE_BACKGROUNDNIGHT, -GAME_SCREEN_OFFSET_X, 0);
 	}
 	else
 	{
-		g->DrawImage(Sexy::IMAGE_STORE_BACKGROUND, 0, 0);
+		g->DrawImage(Sexy::IMAGE_STORE_BACKGROUND, -GAME_SCREEN_OFFSET_X, 0);
 	}
 
 	if (!mHatchTimer && mHatchOpen)

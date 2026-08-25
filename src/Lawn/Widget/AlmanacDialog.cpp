@@ -232,8 +232,8 @@ void AlmanacDialog::Update()
 		}
 	}
 
-	int aMouseX = mApp->mWidgetManager->mLastMouseX;
-	int aMouseY = mApp->mWidgetManager->mLastMouseY;
+	int aMouseX = mApp->mWidgetManager->mLastMouseX - mX;
+	int aMouseY = mApp->mWidgetManager->mLastMouseY - mY;
 	if (SeedHitTest(aMouseX, aMouseY) != SeedType::SEED_NONE || ZombieHitTest(aMouseX, aMouseY) != ZombieType::ZOMBIE_INVALID ||
 		mCloseButton->IsMouseOver() || mIndexButton->IsMouseOver() || mPlantButton->IsMouseOver() || mZombieButton->IsMouseOver())
 	{
@@ -255,7 +255,7 @@ ZombieType AlmanacDialog::GetZombieType(int theIndex)
 
 void AlmanacDialog::DrawIndex(Graphics* g)
 {
-	g->DrawImage(Sexy::IMAGE_ALMANAC_INDEXBACK, 0, 0);
+	g->DrawImage(Sexy::IMAGE_ALMANAC_INDEXBACK, -GAME_SCREEN_OFFSET_X, 0);
 	PvzpDrawString(g, "[SUBURBAN_ALMANAC_INDEX]", BOARD_WIDTH / 2, 60, Sexy::FONT_HOUSEOFTERROR28, Color(220, 220, 220), DrawStringJustification::DS_ALIGN_CENTER);
 
 	if (mPlant)
@@ -274,10 +274,13 @@ void AlmanacDialog::DrawIndex(Graphics* g)
 
 void AlmanacDialog::DrawPlants(Graphics* g)
 {
-	g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBACK, 0, 0);
+	g->DrawImage(Sexy::IMAGE_ALMANAC_PLANTBACK, -GAME_SCREEN_OFFSET_X, 0);
 	PvzpDrawString(g, "[SUBURBAN_ALMANAC_PLANTS]", BOARD_WIDTH / 2, 48, Sexy::FONT_HOUSEOFTERROR20, Color(213, 159, 43), DrawStringJustification::DS_ALIGN_CENTER);
 
-	SeedType aSeedMouseOn = SeedHitTest(mApp->mWidgetManager->mLastMouseX, mApp->mWidgetManager->mLastMouseY);
+	SeedType aSeedMouseOn = SeedHitTest(
+		mApp->mWidgetManager->mLastMouseX - mX,
+		mApp->mWidgetManager->mLastMouseY - mY
+	);
 	for (SeedType aSeedType = SeedType::SEED_PEASHOOTER; aSeedType < NUM_ALMANAC_SEEDS; aSeedType = (SeedType)(aSeedType + 1))
 	{
 		int aPosX, aPosY;
@@ -354,10 +357,13 @@ void AlmanacDialog::DrawPlants(Graphics* g)
 
 void AlmanacDialog::DrawZombies(Graphics* g)
 {
-	g->DrawImage(Sexy::IMAGE_ALMANAC_ZOMBIEBACK, 0, 0);
+	g->DrawImage(Sexy::IMAGE_ALMANAC_ZOMBIEBACK, -GAME_SCREEN_OFFSET_X, 0);
 	PvzpDrawString(g, "[SUBURBAN_ALMANAC_ZOMBIES]", BOARD_WIDTH / 2, 54, Sexy::FONT_DWARVENTODCRAFT24, Color(0, 196, 0), DS_ALIGN_CENTER);
 
-	ZombieType aZombieMouseOn = ZombieHitTest(mApp->mWidgetManager->mLastMouseX, mApp->mWidgetManager->mLastMouseY);
+	ZombieType aZombieMouseOn = ZombieHitTest(
+		mApp->mWidgetManager->mLastMouseX - mX,
+		mApp->mWidgetManager->mLastMouseY - mY
+	);
 	for (int i = 0; i < NUM_ALMANAC_ZOMBIES; i++)
 	{
 		ZombieType aZombieType = GetZombieType(i);

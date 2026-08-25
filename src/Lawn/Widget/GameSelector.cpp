@@ -553,11 +553,13 @@ void GameSelector::Draw(Graphics* g)
 		return;
 
 	g->SetLinearBlend(true);
+	Graphics aBackdropG(*g);
+	aBackdropG.Translate(-GAME_SCREEN_OFFSET_X, 0);
 	Reanimation* aSelectorReanim = mApp->ReanimationGet(mSelectorReanimID);
-	aSelectorReanim->DrawRenderGroup(g, 1);  // "SelectorScreen_BG"
+	aSelectorReanim->DrawRenderGroup(&aBackdropG, 1);  // "SelectorScreen_BG"
 	for (int i = 0; i < 6; i++)
-		mApp->ReanimationGet(mCloudReanimID[i])->Draw(g);
-	aSelectorReanim->DrawRenderGroup(g, RENDER_GROUP_NORMAL);
+		mApp->ReanimationGet(mCloudReanimID[i])->Draw(&aBackdropG);
+	aSelectorReanim->DrawRenderGroup(&aBackdropG, RENDER_GROUP_NORMAL);
 
 	if (mSelectorState == SelectorAnimState::SELECTOR_OPEN)
 	{

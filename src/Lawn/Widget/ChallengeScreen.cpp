@@ -23,6 +23,7 @@
 #include "../../LawnApp.h"
 #include "../System/Music.h"
 #include "ChallengeScreen.h"
+#include "../../GameConstants.h"
 #include "../../Resources.h"
 #include "../ToolTipWidget.h"
 #include "../System/PlayerInfo.h"
@@ -567,7 +568,7 @@ void ChallengeScreen::DrawButton(Graphics* g, int theChallengeIndex)
 void ChallengeScreen::Draw(Graphics* g)
 {
 	g->SetLinearBlend(true);
-	g->DrawImage(Sexy::IMAGE_CHALLENGE_BACKGROUND, 0, 0);
+	g->DrawImage(Sexy::IMAGE_CHALLENGE_BACKGROUND, -GAME_SCREEN_OFFSET_X, 0);
 
 	std::string aTitleString =
 		mPageIndex == CHALLENGE_PAGE_SURVIVAL ? "[PICK_AREA]" :

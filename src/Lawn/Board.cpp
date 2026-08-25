@@ -5863,36 +5863,36 @@ void Board::DrawBackdrop(Graphics* g)
 
 	if (mLevel == 1 && mApp->IsFirstTimeAdventureMode())
 	{
-		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -BOARD_OFFSET, 0);
+		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 0);
 		int aWidth = PvzpAnimateCurve(0, 1000, mSodPosition, 0, Sexy::IMAGE_SOD1ROW->GetWidth(), PvzpCurves::CURVE_LINEAR);
 		Rect aSrcRect(0, 0, aWidth, Sexy::IMAGE_SOD1ROW->GetHeight());
-		g->DrawImage(Sexy::IMAGE_SOD1ROW, 239 - BOARD_OFFSET, 265, aSrcRect);
+		g->DrawImage(Sexy::IMAGE_SOD1ROW, 239 - BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 265, aSrcRect);
 	}
 	else if (((mLevel == 2 || mLevel == 3) && mApp->IsFirstTimeAdventureMode()) || mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_RESODDED)
 	{
-		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -BOARD_OFFSET, 0);
-		g->DrawImage(Sexy::IMAGE_SOD1ROW, 239 - BOARD_OFFSET, 265);
+		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 0);
+		g->DrawImage(Sexy::IMAGE_SOD1ROW, 239 - BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 265);
 		int aWidth = PvzpAnimateCurve(0, 1000, mSodPosition, 0, Sexy::IMAGE_SOD3ROW->GetWidth(), PvzpCurves::CURVE_LINEAR);
 		Rect aSrcRect(0, 0, aWidth, Sexy::IMAGE_SOD3ROW->GetHeight());
-		g->DrawImage(Sexy::IMAGE_SOD3ROW, 235 - BOARD_OFFSET, 149, aSrcRect);
+		g->DrawImage(Sexy::IMAGE_SOD3ROW, 235 - BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 149, aSrcRect);
 	}
 	else if (mLevel == 4 && mApp->IsFirstTimeAdventureMode())
 	{
-		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -BOARD_OFFSET, 0);
-		g->DrawImage(Sexy::IMAGE_SOD3ROW, 235 - BOARD_OFFSET, 149);
+		g->DrawImage(Sexy::IMAGE_BACKGROUND1UNSODDED, -BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 0);
+		g->DrawImage(Sexy::IMAGE_SOD3ROW, 235 - BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 149);
 		int aWidth = PvzpAnimateCurve(0, 1000, mSodPosition, 0, 773, PvzpCurves::CURVE_LINEAR);
 		Rect aSrcRect(232, 0, aWidth, Sexy::IMAGE_BACKGROUND1->GetHeight());
-		g->DrawImage(Sexy::IMAGE_BACKGROUND1, 232 - BOARD_OFFSET, 0, aSrcRect);
+		g->DrawImage(Sexy::IMAGE_BACKGROUND1, 232 - BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 0, aSrcRect);
 	}
 	else if (aBgImage)
 	{
 		if (aBgImage == Sexy::IMAGE_BACKGROUND_MUSHROOMGARDEN || aBgImage == Sexy::IMAGE_BACKGROUND_GREENHOUSE || aBgImage == Sexy::IMAGE_AQUARIUM1)
 		{
-			g->DrawImage(aBgImage, 0, 0);
+			g->DrawImage(aBgImage, -GAME_SCREEN_OFFSET_X, 0);
 		}
 		else
 		{
-			g->DrawImage(aBgImage, -BOARD_OFFSET, 0);
+			g->DrawImage(aBgImage, -BOARD_OFFSET - GAME_SCREEN_OFFSET_X, 0);
 		}
 	}
 
@@ -7103,7 +7103,7 @@ void Board::DrawFadeOut(Graphics* g)
 	{
 		g->SetColor(Color(255, 255, 255, anAlpha));
 	}
-	g->FillRect(0, 0, mWidth, mHeight);
+	g->FillRect(-GAME_SCREEN_OFFSET_X, 0, GAME_SCREEN_WIDTH, mHeight);
 }
 
 void Board::DrawTopRightUI(Graphics* g)

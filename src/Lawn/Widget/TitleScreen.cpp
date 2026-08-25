@@ -157,7 +157,9 @@ void TitleScreen::Draw(Graphics* g)
 		return;
 	}
 
-	g->DrawImage(IMAGE_TITLESCREEN, 0, 0);
+	// The original title texture contains the extra landscape on both sides.
+	// Keep the controls centered while exposing that artwork on the 16:9 canvas.
+	g->DrawImage(IMAGE_TITLESCREEN, -GAME_SCREEN_OFFSET_X, 0);
 	if (mNeedToInit)
 	{
 		return;
