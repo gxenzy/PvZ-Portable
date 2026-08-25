@@ -201,19 +201,19 @@ Board::Board(LawnApp* theApp)
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN || mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
 	{
 		mMenuButton->SetLabel("[MAIN_MENU_BUTTON]");
-		mMenuButton->Resize(628, -10, 163, 46);
+		mMenuButton->Resize(628 + WIDESCREEN_PAD, -10, 163, 46);
 
 		mStoreButton = std::make_unique<GameButton>(1);
 		mStoreButton->mButtonImage = IMAGE_ZENSHOPBUTTON;
 		mStoreButton->mOverImage = IMAGE_ZENSHOPBUTTON_HIGHLIGHT;
 		mStoreButton->mDownImage = IMAGE_ZENSHOPBUTTON_HIGHLIGHT;
 		mStoreButton->mParentWidget = this;
-		mStoreButton->Resize(678, 33, IMAGE_ZENSHOPBUTTON->mWidth, 40);
+		mStoreButton->Resize(678 + WIDESCREEN_PAD, 33, IMAGE_ZENSHOPBUTTON->mWidth, 40);
 	}
 	else
 	{
 		mMenuButton->SetLabel("[MENU_BUTTON]");
-		mMenuButton->Resize(681, -10, 117, 46);
+		mMenuButton->Resize(681 + WIDESCREEN_PAD, -10, 117, 46);
 	}
 
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_LAST_STAND)
@@ -227,7 +227,7 @@ Board::Board(LawnApp* theApp)
 	if (mApp->mGameMode == GameMode::GAMEMODE_UPSELL)
 	{
 		mMenuButton->SetLabel("[MAIN_MENU_BUTTON]");
-		mMenuButton->Resize(628, -10, 163, 46);
+		mMenuButton->Resize(628 + WIDESCREEN_PAD, -10, 163, 46);
 
 		mStoreButton = std::make_unique<GameButton>(1);
 		mStoreButton->mDrawStoneButton = true;
@@ -7113,12 +7113,12 @@ void Board::DrawTopRightUI(Graphics* g)
 		if (mChallenge->mChallengeState == STATECHALLENGE_ZEN_FADING)
 		{
 			mMenuButton->mY = PvzpAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, -10, -50, PvzpCurves::CURVE_EASE_IN_OUT);
-			mStoreButton->mX = PvzpAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, 678, 800, PvzpCurves::CURVE_EASE_IN_OUT);
+			mStoreButton->mX = PvzpAnimateCurve(50, 0, mChallenge->mChallengeStateCounter, 678 + WIDESCREEN_PAD, 800 + WIDESCREEN_PAD, PvzpCurves::CURVE_EASE_IN_OUT);
 		}
 		else
 		{
 			mMenuButton->mY = -10;
-			mStoreButton->mX = 678;
+			mStoreButton->mX = 678 + WIDESCREEN_PAD;
 		}
 	}
 
@@ -7152,9 +7152,9 @@ void Board::DrawUIBottom(Graphics* g)
 		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 160, 40, aWaveTime);
 		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 320, 40, aWaveTime);
 		g->DrawImageCel(Sexy::IMAGE_WAVECENTER, 480, 40, aWaveTime);
-		//PvzpDrawImageCelScaled(g, Sexy::IMAGE_WAVESIDE, 800, 40, 0, aWaveTime, -1.0f, 1.0f);
+		//PvzpDrawImageCelScaled(g, Sexy::IMAGE_WAVESIDE, BOARD_WIDTH, 40, 0, aWaveTime, -1.0f, 1.0f);
 		PvzpDrawImageCelScaled(
-			g, Sexy::IMAGE_WAVESIDE, 800, 40, aWaveTime % Sexy::IMAGE_WAVESIDE->mNumCols,
+			g, Sexy::IMAGE_WAVESIDE, BOARD_WIDTH, 40, aWaveTime % Sexy::IMAGE_WAVESIDE->mNumCols,
 			aWaveTime / Sexy::IMAGE_WAVESIDE->mNumCols, -1.0f, 1.0f
 		);
 		g->SetDrawMode(Graphics::DRAWMODE_NORMAL);

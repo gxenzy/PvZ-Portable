@@ -24,15 +24,17 @@
 #include "ConstEnums.h"
 constexpr const double PI = 3.141592653589793;
 
+// Widescreen constants (PAD = 133, matching Twig6943's PvZWidescreenSteam loader)
+constexpr const int WIDESCREEN_PAD = 133;
 // Constants
-constexpr const int BOARD_WIDTH = 800;
+constexpr const int BOARD_WIDTH = 800 + 2 * WIDESCREEN_PAD;   // 1066 (16:9 widescreen)
 constexpr const int BOARD_HEIGHT = 600;
-constexpr const int WIDE_BOARD_WIDTH = 800;
-constexpr const int BOARD_OFFSET = 220;
-constexpr const int BOARD_EDGE = -100;
-constexpr const int BOARD_IMAGE_WIDTH_OFFSET = 1180;
-constexpr const int BOARD_ICE_START = 800;
-constexpr const int LAWN_XMIN = 40;
+constexpr const int WIDE_BOARD_WIDTH = 800 + 2 * WIDESCREEN_PAD; // 1066
+constexpr const int BOARD_OFFSET = 220 + WIDESCREEN_PAD;          // 353
+constexpr const int BOARD_EDGE = -100 - WIDESCREEN_PAD;           // -233
+constexpr const int BOARD_IMAGE_WIDTH_OFFSET = 1180 + WIDESCREEN_PAD; // 1313
+constexpr const int BOARD_ICE_START = 800 + 2 * WIDESCREEN_PAD;   // 1066
+constexpr const int LAWN_XMIN = 40 + WIDESCREEN_PAD;              // 173
 constexpr const int LAWN_YMIN = 80;
 constexpr const int HIGH_GROUND_HEIGHT = 30;
 

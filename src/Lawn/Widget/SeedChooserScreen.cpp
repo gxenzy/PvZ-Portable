@@ -73,7 +73,7 @@ SeedChooserScreen::SeedChooserScreen()
 
 	mMenuButton = std::make_unique<GameButton>(SeedChooserScreen::SeedChooserScreen_Menu);
 	mMenuButton->SetLabel("[MENU_BUTTON]");
-	mMenuButton->Resize(681, -10, 117, 46);
+	mMenuButton->Resize(681 + WIDESCREEN_PAD, -10, 117, 46);
 	mMenuButton->mDrawStoneButton = true;
 
 	mRandomButton = std::make_unique<GameButton>(SeedChooserScreen::SeedChooserScreen_Random);

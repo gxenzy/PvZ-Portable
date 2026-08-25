@@ -328,7 +328,7 @@ ZombatarWidget::ZombatarWidget(GameSelector* theGameSelector)
 		IMAGE_ZOMBATAR_NEXT_BUTTON, IMAGE_ZOMBATAR_NEXT_BUTTON_HIGHLIGHT, nullptr);
 	mNextPageButton->Resize(ZOMBATAR_NEXT_PAGE_X, ZOMBATAR_PAGE_BTN_Y, 33, 38);
 
-	Resize(800, 0, BOARD_WIDTH, BOARD_HEIGHT);
+	Resize(BOARD_WIDTH, 0, BOARD_WIDTH, BOARD_HEIGHT);
 	ResetDraft();
 	UpdateButtonState();
 }
