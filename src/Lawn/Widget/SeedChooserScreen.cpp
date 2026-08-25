@@ -437,23 +437,23 @@ void SeedChooserScreen::UpdateViewLawn()
 	if (mViewLawnTime == 100) mBoard->DisplayAdviceAgain("[CLICK_TO_CONTINUE]", MESSAGE_STYLE_HINT_STAY, ADVICE_CLICK_TO_CONTINUE);
 	else if (mViewLawnTime == 251) mViewLawnTime = 250;
 
-	int aBoardX = BOARD_IMAGE_WIDTH_OFFSET - mApp->mWidth;
+	const int aBoardX = BOARD_IMAGE_WIDTH_OFFSET - BOARD_WIDTH;
 	int aSeedChooserY = SEED_CHOOSER_OFFSET_Y - Sexy::IMAGE_SEEDCHOOSER_BACKGROUND->mHeight;
 	if (mViewLawnTime <= 100)
 	{
-		mBoard->Move(-PvzpAnimateCurve(0, 100, mViewLawnTime, aBoardX, 0, CURVE_EASE_IN_OUT), 0);
-		Move(0, PvzpAnimateCurve(0, 40, mViewLawnTime, aSeedChooserY, SEED_CHOOSER_OFFSET_Y, CURVE_EASE_IN_OUT));
+		mBoard->Move(GAME_SCREEN_OFFSET_X - PvzpAnimateCurve(0, 100, mViewLawnTime, aBoardX, 0, CURVE_EASE_IN_OUT), 0);
+		Move(GAME_SCREEN_OFFSET_X, PvzpAnimateCurve(0, 40, mViewLawnTime, aSeedChooserY, SEED_CHOOSER_OFFSET_Y, CURVE_EASE_IN_OUT));
 	}
 	else if (mViewLawnTime <= 250)
 	{
-		mBoard->Move(0, 0);
-		Move(0, SEED_CHOOSER_OFFSET_Y);
+		mBoard->Move(GAME_SCREEN_OFFSET_X, 0);
+		Move(GAME_SCREEN_OFFSET_X, SEED_CHOOSER_OFFSET_Y);
 	}
 	else if (mViewLawnTime <= 350)
 	{
 		mBoard->ClearAdvice(ADVICE_CLICK_TO_CONTINUE);
-		mBoard->Move(-PvzpAnimateCurve(250, 350, mViewLawnTime, 0, aBoardX, CURVE_EASE_IN_OUT), 0);
-		Move(0, PvzpAnimateCurve(310, 350, mViewLawnTime, SEED_CHOOSER_OFFSET_Y, aSeedChooserY, CURVE_EASE_IN_OUT));
+		mBoard->Move(GAME_SCREEN_OFFSET_X - PvzpAnimateCurve(250, 350, mViewLawnTime, 0, aBoardX, CURVE_EASE_IN_OUT), 0);
+		Move(GAME_SCREEN_OFFSET_X, PvzpAnimateCurve(310, 350, mViewLawnTime, SEED_CHOOSER_OFFSET_Y, aSeedChooserY, CURVE_EASE_IN_OUT));
 	}
 	else
 	{

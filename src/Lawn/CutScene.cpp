@@ -692,7 +692,7 @@ void CutScene::StartLevelIntro()
 	mBoard->mSeedBank->Move(SEED_BANK_OFFSET_X, -IMAGE_SEEDBANK->GetHeight());
 	mBoard->mMenuButton->mBtnNoDraw = true;
 	mApp->mSeedChooserScreen->mMouseVisible = false;
-	mApp->mSeedChooserScreen->Move(0, SEED_CHOOSER_OFFSET_Y);
+	mApp->mSeedChooserScreen->Move(GAME_SCREEN_OFFSET_X, SEED_CHOOSER_OFFSET_Y);
 	mApp->mSeedChooserScreen->mMenuButton->mBtnNoDraw = true;
 	mBoard->mShowShovel = false;
 	mBoard->mSeedBank->mCutSceneDarken = 255;
